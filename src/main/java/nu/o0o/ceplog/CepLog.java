@@ -9,7 +9,7 @@ public class CepLog
         HttpAdapter proc = new HttpAdapter();
         proc.run();
         while (true) {
-        	
+        	Thread.sleep(1000);
         }
     }
 }

@@ -28,3 +28,14 @@ java -jar target/ceplog-1.0-SNAPSHOT.jar
 
 ```
 
+Sending Events
+--------------
+
+You can start sending events with something like 
+
+```sh
+
+curl "http://localhost:8084/sendevent?stream=SyslogEvent&date=20120505121212&message='This+is+log+message'&severity=4&origin=127.0.0.1"
+
+
+```
