@@ -86,7 +86,7 @@
 					</execution>
 				</executions>
 				<configuration>
-					<finalName>ceplog-${artifactId}-${version}</finalName>
+					<finalName>${artifactId}-${version}-runable</finalName>
 				</configuration>
 			</plugin>
   		<plugin>
