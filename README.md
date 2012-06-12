@@ -39,3 +39,8 @@ curl "http://localhost:8084/sendevent?stream=SyslogEvent&date=20120505121212&mes
 
 
 ```
+
+Viewing Results
+---------------
+
+Produced events are stored in SOLR.
