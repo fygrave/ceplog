@@ -27,9 +27,14 @@ public class HttpAdapter {
         System.out.println();
 
         Configuration config = new Configuration();
+        
         config.addPluginLoader("EsperIOHTTPAdapter", EsperIOHTTPAdapterPlugin.class.getName(), new Properties(), esperIOHTTPConfig);
 
         config.addEventTypeAutoName("nu.o0o.ceplog.event");
+        // debug
+        config.getEngineDefaults().getLogging().setEnableExecutionDebug(true);
+        
+        
         EPServiceProvider epService = EPServiceProviderManager.getDefaultProvider(config);
         PacksPerSecondStatement pksPerSec = new PacksPerSecondStatement(epService.getEPAdministrator());
         pksPerSec.addListener(new RateUpdateListener());
