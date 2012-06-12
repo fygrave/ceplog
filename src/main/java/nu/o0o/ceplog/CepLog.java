@@ -1,5 +1,5 @@
 package nu.o0o.ceplog;
-import nu.o0o.ceplog.processor.HttpAdapter;;
+import nu.o0o.ceplog.processor.HttpAdapter;
 
 public class CepLog
 {

@@ -32,6 +32,13 @@
       <version>3.8.1</version>
       <scope>test</scope>
     </dependency>
+        <dependency>
+               <artifactId>solr-solrj</artifactId>
+               <groupId>org.apache.solr</groupId>
+               <version>1.4.0</version>
+               <type>jar</type>
+               <scope>compile</scope>
+        </dependency>
     <dependency>
     	<groupId>com.espertech</groupId>
     	<artifactId>esper</artifactId>

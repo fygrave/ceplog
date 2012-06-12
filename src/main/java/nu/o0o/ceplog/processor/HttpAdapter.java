@@ -3,7 +3,7 @@ package nu.o0o.ceplog.processor;
 import com.espertech.esper.client.Configuration;
 import com.espertech.esper.client.EPServiceProvider;
 import com.espertech.esper.client.EPServiceProviderManager;
-import com.espertech.esper.client.EPStatement;
+//import com.espertech.esper.client.EPStatement;
 import com.espertech.esper.client.EventBean;
 import com.espertech.esper.client.UpdateListener;
 import com.espertech.esperio.http.EsperIOHTTPAdapterPlugin;
@@ -31,13 +31,16 @@ public class HttpAdapter {
 
         config.addEventTypeAutoName("nu.o0o.ceplog.event");
         EPServiceProvider epService = EPServiceProviderManager.getDefaultProvider(config);
-        String expression = "select date from SyslogEvent.win:time(30 sec)";
-        EPStatement statement = epService.getEPAdministrator().createEPL(expression);
+        PacksPerSecondStatement pksPerSec = new PacksPerSecondStatement(epService.getEPAdministrator());
+        pksPerSec.addListener(new RateUpdateListener());
+        
+        AnomalyDetectStatement aDeSt = new AnomalyDetectStatement(epService.getEPAdministrator());
+        aDeSt.addListener(new AnomalyListener());
+        //String expression = "select src,dst from SyslogEvent.win:time(30 sec)";
+        //EPStatement statement = epService.getEPAdministrator().createEPL(expression);
 
-        MyListener listener = new MyListener();
-        statement.addListener(listener);
-
-
+        //MyListener listener = new MyListener();
+        //statement.addListener(listener);
  //        SupportHTTPClient client = new SupportHTTPClient();
  //       client.request(8083, "sendevent", "stream", "AccessLogEvent", "date", "mydate");
 //
