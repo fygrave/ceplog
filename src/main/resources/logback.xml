@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Example LOGBACK Configuration File
+
+http://logback.qos.ch/manual/configuration.html
+
+  -->
+<configuration>
+  <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+    <!-- encoders are assigned the type
+         ch.qos.logback.classic.encoder.PatternLayoutEncoder by default -->
+    <encoder>
+      <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+    </encoder>
+  </appender>
+
+  <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+    <file>/tmp/ceplog.log</file>
+    <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+      <!-- daily rollover -->
+      <fileNamePattern>ceplog_%d{yyyy-MM-dd}.log</fileNamePattern>
+
+      <!-- keep 30 days' worth of history -->
+      <maxHistory>30</maxHistory>
+    </rollingPolicy>
+
+    <encoder>
+      <pattern>%-4relative [%thread] %-5level %logger{35} - %msg%n</pattern>
+    </encoder>
+  </appender>
+
+  <root level="WARN">
+    <appender-ref ref="STDOUT" />
+  </root>
+  <root level="INFO">
+    <appender-ref ref="FILE" />
+  </root>
+</configuration>

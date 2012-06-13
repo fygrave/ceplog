@@ -35,7 +35,7 @@
         <dependency>
                <artifactId>solr-solrj</artifactId>
                <groupId>org.apache.solr</groupId>
-               <version>1.4.0</version>
+               <version>3.5.0</version>
                <type>jar</type>
                <scope>compile</scope>
         </dependency>
@@ -68,6 +68,12 @@
   		<artifactId>slf4j-api</artifactId>
   		<version>1.6.4</version>
 	</dependency>
+
+<dependency> 
+  <groupId>ch.qos.logback</groupId>
+  <artifactId>logback-classic</artifactId>
+  <version>1.0.4</version>
+</dependency>
     <dependency>
     	<groupId>commons-logging</groupId>
     	<artifactId>commons-logging</artifactId>

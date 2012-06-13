@@ -17,12 +17,15 @@ public class RateUpdateListener implements UpdateListener {
 		
 		System.out.println("total " + evt.length + " events");
 		for (int i=0; i< evt.length; i++) {
-		System.out.println("Rate for " + evt[i].get("src").toString() + " -> " + 
-		 evt[i].get("dst").toString()+ ":" + evt[i].get("dst_port") 
-		 + " cnt " + evt[i].get("cnt") + " action " + evt[i].get("action"));
-		solr.alert("CEPAlert: rate exeeds " + evt[i].get("cnt") + " for action=" + evt[i].get("action") +
-				", " + evt[i].get("src").toString() + " -> " + 
-				 evt[i].get("dst").toString()+ ":" + evt[i].get("dst_port") , "Rate exceeds Alert", evt[i]);
+			System.out.println("Rate for " + evt[i].get("src").toString() + " -> " + 
+					evt[i].get("dst").toString()+ ":" + evt[i].get("dst_port") 
+					+ " cnt " + evt[i].get("cnt") + " action " + evt[i].get("action"));
+			if (Integer.parseInt(evt[i].get("cnt").toString()) > 10) {
+				solr.alert("CEPAlert: rate exeeds " + evt[i].get("cnt") + " for action=" + evt[i].get("action") +
+						", " + evt[i].get("src").toString() + " -> " + 
+						evt[i].get("dst").toString()+ ":" + evt[i].get("dst_port") ,
+						"Rate exceeds Alert", evt[i]);
+			}
 		}
 		
 	}

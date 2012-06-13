@@ -32,8 +32,8 @@ public class HttpAdapter {
 
         config.addEventTypeAutoName("nu.o0o.ceplog.event");
         // debug
-        config.getEngineDefaults().getLogging().setEnableExecutionDebug(true);
-        
+        config.getEngineDefaults().getLogging().setEnableExecutionDebug(false);
+        config.getEngineDefaults().getLogging().setEnableTimerDebug(false);
         
         EPServiceProvider epService = EPServiceProviderManager.getDefaultProvider(config);
         PacksPerSecondStatement pksPerSec = new PacksPerSecondStatement(epService.getEPAdministrator());
