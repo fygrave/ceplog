@@ -4,6 +4,7 @@ import com.espertech.esper.client.Configuration;
 import com.espertech.esper.client.EPRuntime;
 import com.espertech.esper.client.EPServiceProvider;
 import com.espertech.esper.client.EPServiceProviderManager;
+import com.espertech.esper.client.EPStatement;
 //import com.espertech.esper.client.EPStatement;
 import com.espertech.esper.client.EventBean;
 import com.espertech.esper.client.UpdateListener;
@@ -11,6 +12,10 @@ import com.espertech.esperio.http.EsperIOHTTPAdapterPlugin;
 import com.espertech.esperio.http.config.ConfigurationHTTPAdapter;
 import com.espertech.esperio.http.config.Request;
 
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.Properties;
 
 
@@ -59,13 +64,14 @@ public class HttpAdapter {
         epService = EPServiceProviderManager.getProvider(ENGINE_URI, config);
         
         
-        PacksPerSecondStatement pksPerSec = new PacksPerSecondStatement(epService.getEPAdministrator());
-        pksPerSec.addListener(new RateUpdateListener());
+        //PacksPerSecondStatement pksPerSec = new PacksPerSecondStatement(epService.getEPAdministrator());
+        //pksPerSec.addListener(new RateUpdateListener());
         
-        AnomalyDetectStatement aDeSt = new AnomalyDetectStatement(epService.getEPAdministrator());
-        aDeSt.addListener(new AnomalyListener());
-        aDeSt.addListener(new MyListener());
-        pksPerSec.addListener(new MyListener());
+        //AnomalyDetectStatement aDeSt = new AnomalyDetectStatement(epService.getEPAdministrator());
+        //aDeSt.addListener(new AnomalyListener());
+        //aDeSt.addListener(new MyListener());
+        //pksPerSec.addListener(new MyListener());
+        readRules(new AnomalyListener());
         cepRT = epService.getEPRuntime();
        
         
@@ -81,7 +87,25 @@ public class HttpAdapter {
 
     }
 
-    public class MyListener implements UpdateListener {
+    private void readRules(UpdateListener lst) throws IOException {
+        BufferedReader br = new BufferedReader(new FileReader("rules.cep"));
+		
+        try {
+            String line = br.readLine();
+
+            while (line != null) {
+            	EPStatement statement = epService.getEPAdministrator().createEPL(line);
+            	statement.addListener(lst);
+                line = br.readLine();
+            }
+            
+        } finally {
+            br.close();
+        }
+		
+	}
+
+	public class MyListener implements UpdateListener {
         public void update(EventBean[] newEvents, EventBean[] oldEvents) {
             EventBean event = newEvents[0];
             System.out.println("got events " + newEvents.length);
