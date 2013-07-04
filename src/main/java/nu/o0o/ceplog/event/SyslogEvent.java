@@ -18,6 +18,9 @@ public class SyslogEvent {
 	private int dst_port;
 	private String classification;
 	private String sensor;
+	private String proto;
+	private int bytes;
+	private int packets;
 	private long date;
 	private int priority;
 	private String origin;
@@ -26,12 +29,17 @@ public class SyslogEvent {
 	
 	}
 	
-	public SyslogEvent(int _priority,int  _severity,String _origin, String _message, int _date ) {
+	public SyslogEvent(int _priority,int  _severity,String _origin, String _message, int _date, String _src, String _dst, String _action, int _dst_port, int _src_port ) {
 		message = _message;
 		priority = _priority;
 		severity = _severity;
 		origin = _origin;
 		date = _date;
+		action = _action;
+		src_port = _src_port;
+		dst_port = _dst_port;
+		src = _src;
+		dst = _dst;
 	}
 	public void setDate(long _date) {
 		date = _date;
@@ -178,6 +186,30 @@ public class SyslogEvent {
 
 	public void setDst_port(int dst_port) {
 		this.dst_port = dst_port;
+	}
+
+	public String getProto() {
+		return proto;
+	}
+
+	public void setProto(String proto) {
+		this.proto = proto;
+	}
+
+	public int getBytes() {
+		return bytes;
+	}
+
+	public void setBytes(int bytes) {
+		this.bytes = bytes;
+	}
+
+	public int getPackets() {
+		return packets;
+	}
+
+	public void setPackets(int packets) {
+		this.packets = packets;
 	}
 
 

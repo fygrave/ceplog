@@ -1,21 +1,39 @@
 package nu.o0o.ceplog.processor;
 
 import com.espertech.esper.client.Configuration;
+import com.espertech.esper.client.EPRuntime;
 import com.espertech.esper.client.EPServiceProvider;
 import com.espertech.esper.client.EPServiceProviderManager;
 //import com.espertech.esper.client.EPStatement;
 import com.espertech.esper.client.EventBean;
 import com.espertech.esper.client.UpdateListener;
 import com.espertech.esperio.http.EsperIOHTTPAdapterPlugin;
+import com.espertech.esperio.http.config.ConfigurationHTTPAdapter;
+import com.espertech.esperio.http.config.Request;
+
 import java.util.Properties;
 
 
 public class HttpAdapter {
 	
+	 private final static String ENGINE_URI = "CEP0000";
+	 private EPRuntime cepRT;
+	 private EPServiceProvider epService;
+
+	
     public void run() throws Exception {
 
         String port = "8084";
         boolean isNio = true;
+        
+        ConfigurationHTTPAdapter adapterConfig = new ConfigurationHTTPAdapter();
+
+        Request requestOne = new Request();
+        requestOne.setStream("PacksPerSecond");
+        requestOne.setUri("http://localhost:8085/root");
+        adapterConfig.getRequests().add(requestOne);
+
+        
 
         String esperIOHTTPConfig = "<esperio-http-configuration>\n" +
                 "\t<service name=\"service1\" port=\"" + port + "\" nio=\"" + isNio + "\"/>\n" +
@@ -25,6 +43,8 @@ public class HttpAdapter {
         System.out.println();
         System.out.println(esperIOHTTPConfig);
         System.out.println();
+        
+
 
         Configuration config = new Configuration();
         
@@ -32,15 +52,23 @@ public class HttpAdapter {
 
         config.addEventTypeAutoName("nu.o0o.ceplog.event");
         // debug
-        config.getEngineDefaults().getLogging().setEnableExecutionDebug(false);
+        config.getEngineDefaults().getLogging().setEnableExecutionDebug(true);
         config.getEngineDefaults().getLogging().setEnableTimerDebug(false);
         
-        EPServiceProvider epService = EPServiceProviderManager.getDefaultProvider(config);
+        //EPServiceProvider epService = EPServiceProviderManager.getDefaultProvider(config);
+        epService = EPServiceProviderManager.getProvider(ENGINE_URI, config);
+        
+        
         PacksPerSecondStatement pksPerSec = new PacksPerSecondStatement(epService.getEPAdministrator());
         pksPerSec.addListener(new RateUpdateListener());
         
         AnomalyDetectStatement aDeSt = new AnomalyDetectStatement(epService.getEPAdministrator());
         aDeSt.addListener(new AnomalyListener());
+        aDeSt.addListener(new MyListener());
+        pksPerSec.addListener(new MyListener());
+        cepRT = epService.getEPRuntime();
+       
+        
         //String expression = "select src,dst from SyslogEvent.win:time(30 sec)";
         //EPStatement statement = epService.getEPAdministrator().createEPL(expression);
 
@@ -66,9 +94,15 @@ public class HttpAdapter {
         adpt.run();
         while (true) {
         	Thread.sleep(1000);
+        	System.out.println("Events " + adpt.getProcessed());
         	// compute stats
         }
     }
+
+	public long getProcessed() {
+		// TODO Auto-generated method stub
+		return cepRT.getNumEventsEvaluated();
+	}
 	
 	
 

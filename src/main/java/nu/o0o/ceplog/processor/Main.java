@@ -32,9 +32,9 @@ public class Main {
         EPRuntime epRuntime = epService.getEPRuntime();
         AdapterInputSource adapterInputSource = new AdapterInputSource("foo.csv");
         (new CSVInputAdapter(epService, adapterInputSource, "OrderEvent")).start();
-        SyslogEvent ev1 = new SyslogEvent(1, 1, "1.2.3.4", "Failure", 2012121);	
+        SyslogEvent ev1 = new SyslogEvent(1, 1, "1.2.3.4", "Failure", 2012121, "t", "t","t", 0, 0);	
 
-        SyslogEvent ev2 = new SyslogEvent(1, 1, "1.2.3.4", "Failure", 212);
+        SyslogEvent ev2 = new SyslogEvent(1, 1, "1.2.3.4", "Failure", 212, "t", "t", "t", 0, 0);
         epRuntime.sendEvent(ev1);
         epRuntime.sendEvent(ev2);
         for (int i = 0; i < 10; i++) {  

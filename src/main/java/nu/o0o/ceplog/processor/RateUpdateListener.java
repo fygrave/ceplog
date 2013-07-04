@@ -5,7 +5,7 @@ import com.espertech.esper.client.UpdateListener;
 
 public class RateUpdateListener implements UpdateListener {
 
-	@Override
+	//@Override
 	public void update(EventBean[] newEvt, EventBean[] oldEvt) {
 		// TODO Auto-generated method stub
 		if (newEvt.length > 0) {
@@ -16,20 +16,16 @@ public class RateUpdateListener implements UpdateListener {
 	private void logRate(EventBean[] evt) {
 		
 		System.out.println("total " + evt.length + " events");
-		for (int i=0; i< evt.length; i++) {
-			System.out.println("Rate for " + evt[i].get("src").toString() + " -> " + 
-					evt[i].get("dst").toString()+ ":" + evt[i].get("dst_port") 
-					+ " cnt " + evt[i].get("cnt") + " action " + evt[i].get("action"));
-			if (Integer.parseInt(evt[i].get("cnt").toString()) > 10) {
-				solr.alert("CEPAlert: rate exeeds " + evt[i].get("cnt") + " for action=" + evt[i].get("action") +
-						", " + evt[i].get("src").toString() + " -> " + 
-						evt[i].get("dst").toString()+ ":" + evt[i].get("dst_port") ,
-						"Rate exceeds Alert", evt[i]);
-			}
-		}
+		//for (int i=0; i< evt.length; i++) {
+		//	System.out.println("Rate for " + evt[i].get("src").toString() + " -> " + 
+		//			evt[i].get("dst").toString()+ ":" + evt[i].get("dst_port") 
+		//			+ " cnt " + evt[i].get("cnt") );
+			
+			
+		//}
 		
 	}
-	private static final SolrNotifier solr = SolrNotifier.getSolr();
+	private static final AlertNotifier solr = AlertNotifier.getInstance();
 
 
 }

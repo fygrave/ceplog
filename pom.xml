@@ -21,8 +21,8 @@
   	<repository>
   		<id>maven2-repository.dev.java.net</id>
   		<name>Java.net repository for Maven</name>
-  		<url>https://maven-repository.dev.java.net/nonav/repository</url>
-  		<layout>legacy</layout>
+        <url>http://download.java.net/maven/2/</url>
+  		<layout>default</layout>
   	</repository>
   </repositories>
   <dependencies>
@@ -32,13 +32,13 @@
       <version>3.8.1</version>
       <scope>test</scope>
     </dependency>
-        <dependency>
-               <artifactId>solr-solrj</artifactId>
-               <groupId>org.apache.solr</groupId>
-               <version>3.5.0</version>
-               <type>jar</type>
-               <scope>compile</scope>
-        </dependency>
+
+
+<dependency>
+    <groupId>org.elasticsearch</groupId>
+    <artifactId>elasticsearch</artifactId>
+    <version>0.90.1</version>
+</dependency>
     <dependency>
     	<groupId>com.espertech</groupId>
     	<artifactId>esper</artifactId>
@@ -61,7 +61,7 @@
     <dependency>
     	<groupId>log4j</groupId>
     	<artifactId>log4j</artifactId>
-    	<version>1.2.6</version>
+    	<version>1.2.12</version>
     </dependency>
     <dependency>
   		<groupId>org.slf4j</groupId>
@@ -87,6 +87,14 @@
   </dependencies>
   <build>
   	<plugins>
+
+       <plugin>  
+        <artifactId>maven-compiler-plugin</artifactId>  
+        <configuration>  
+          <source>1.5</source>  
+          <target>1.5</target>  
+        </configuration>  
+      </plugin>  
   	    <plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-shade-plugin</artifactId>

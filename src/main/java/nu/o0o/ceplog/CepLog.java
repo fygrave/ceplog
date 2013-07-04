@@ -9,7 +9,8 @@ public class CepLog
         HttpAdapter proc = new HttpAdapter();
         proc.run();
         while (true) {
-        	Thread.sleep(1000);
+        	Thread.sleep(10000);
+        	System.out.println("Stats: Events " + proc.getProcessed());
         }
     }
 }

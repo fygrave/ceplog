@@ -9,7 +9,7 @@ public class AnomalyDetectStatement {
 	
 	public AnomalyDetectStatement(EPAdministrator admin)
 	{
-		String stmt = "select date,src,dst,dst_port,action,avg(cnt) as avgCnt, cnt as cnCnt from PacksPerSecond.win:time(20 sec) group by src,dst having cnt > avg(cnt) * 0.75 ";
+		String stmt = "select date,src,dst,dst_port, avg(cnt) as avgCnt, cnt as cnCnt from PacksPerSecond.win:time(30 sec) group by src,dst having cnt > avg(cnt) * 2 ";
 		statement = admin.createEPL(stmt);
 		
 	}
